@@ -216,15 +216,16 @@ export const projects = [
   {
     name: "Monitor Poder360",
     icon: "bot",
-    tagline: "Plataforma de automação e alertas",
+    tagline: "Notícias, dados econômicos e mercado de ações em tempo real",
     stack: ["Python", "Celery", "Docker", "Kubernetes"],
     metrics: [
       { label: "Scrapers ativos", value: "150+" },
       { label: "Taxa de sucesso", value: "98%" },
     ],
     bullets: [
-      "Cobertura de Câmara, Senado, STF, CVM, Bacen e Portal da Transparência",
-      "+90 scrapers de notícias monitorando veículos e tribunais",
+      "Monitoramento em tempo real de Câmara, Senado e STF",
+      "Dados econômicos (Bacen) e do mercado de ações (CVM) atualizados continuamente",
+      "+90 scrapers de notícias monitorando agências, veículos e tribunais",
       "Monitoramento do Diário Oficial da União e agenda da Presidência",
       "Alertas automáticos por e-mail para assinantes",
     ],

@@ -67,7 +67,7 @@ export default function AutomationScale() {
               </span>
             </div>
             <p className="text-xs text-slate-500 mb-4">
-              Câmara, Senado, STF, CVM, Bacen, Portal da Transparência e +90 fontes de notícia
+              Em tempo real: notícias, agências públicas, dados econômicos (Bacen), mercado de ações (CVM) e mais
             </p>
             <div className="h-72">
               <ResponsiveContainer width="100%" height="100%">
