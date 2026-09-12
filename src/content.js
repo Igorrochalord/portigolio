@@ -12,9 +12,10 @@ export const profile = {
 };
 
 export const links = {
-  linkedin: "#", // TODO: link do LinkedIn
+  linkedin: "https://www.linkedin.com/in/igor-rocha-0bb14521a/",
+  linkedinEn: "https://www.linkedin.com/in/igor-rocha-0bb14521a/?locale=en-US", // caso o site ganhe uma versão em inglês
   github: "https://github.com/Igorrochalord",
-  whatsapp: "#", // TODO: https://wa.me/55XXXXXXXXXXX
+  whatsapp: "https://wa.me/5561991207786",
   cv: "#", // TODO: link para o PDF do currículo
   email: "mailto:igorprofessionaljob@gmail.com",
 };
