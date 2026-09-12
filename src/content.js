@@ -19,6 +19,13 @@ export const links = {
   email: "mailto:igorprofessionaljob@gmail.com",
 };
 
+// Repositório usado para puxar ao vivo o histórico de deploys/commits (via API pública do GitHub).
+export const githubRepo = {
+  owner: "Igorrochalord",
+  name: "portigolio",
+  workflow: "deploy.yml",
+};
+
 // Dedicatória ao pai do Igor. Edite o texto livremente — é seu, deixei só um rascunho.
 export const dedication = {
   name: "Ismael Alves da Silva Araújo",

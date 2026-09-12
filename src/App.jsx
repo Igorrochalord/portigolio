@@ -3,6 +3,7 @@ import Hero from "./components/Hero.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import ImpactCases from "./components/ImpactCases.jsx";
 import AutomationScale from "./components/AutomationScale.jsx";
+import GithubActivity from "./components/GithubActivity.jsx";
 import Skills from "./components/Skills.jsx";
 import Projects from "./components/Projects.jsx";
 import Timeline from "./components/Timeline.jsx";
@@ -19,6 +20,7 @@ export default function App() {
       <Dashboard />
       <ImpactCases />
       <AutomationScale />
+      <GithubActivity />
       <Skills />
       <Projects />
       <Timeline />
