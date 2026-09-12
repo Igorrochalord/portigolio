@@ -13,7 +13,7 @@ import {
   Bar,
   CartesianGrid,
 } from "recharts";
-import { cloudCostData, deployTrend, automationBars } from "../content.js";
+import { useContent } from "../content.js";
 
 const CYAN = "#22d3ee";
 const CYAN_DIM = "#0e7490";
@@ -50,16 +50,17 @@ function Panel({ title, badge, children, delay }) {
 }
 
 export default function Dashboard() {
+  const { cloudCostData, deployTrend, automationBars, ui } = useContent();
+  const t = ui.dashboard;
+
   return (
     <section id="dashboard" className="px-6 py-24">
       <div className="max-w-6xl mx-auto">
-        <p className="font-mono text-cyan-400 text-sm mb-2 tracking-widest">ENGINEERING DASHBOARD</p>
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">
-          Métricas de infraestrutura, em tempo real
-        </h2>
+        <p className="font-mono text-cyan-400 text-sm mb-2 tracking-widest">{t.eyebrow}</p>
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">{t.heading}</h2>
 
         <div className="grid md:grid-cols-3 gap-6">
-          <Panel title="Cloud Cost Savings" badge="-35%" delay={0}>
+          <Panel title={t.cloudCost.title} badge="-35%" delay={0}>
             <div className="h-40 flex items-center justify-center">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -81,15 +82,15 @@ export default function Dashboard() {
             </div>
             <div className="flex justify-center gap-4 text-xs text-slate-400 mt-2">
               <span className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-cyan-400" /> Economia
+                <span className="w-2 h-2 rounded-full bg-cyan-400" /> {t.cloudCost.legendSavings}
               </span>
               <span className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-white/20" /> Custo atual
+                <span className="w-2 h-2 rounded-full bg-white/20" /> {t.cloudCost.legendCurrent}
               </span>
             </div>
           </Panel>
 
-          <Panel title="Deploy Time (min)" badge="-60%" delay={0.1}>
+          <Panel title={t.deployTime.title} badge="-60%" delay={0.1}>
             <div className="h-40">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={deployTrend} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
@@ -109,7 +110,7 @@ export default function Dashboard() {
             </div>
           </Panel>
 
-          <Panel title="Automações Ativas" badge="+150" delay={0.2}>
+          <Panel title={t.automations.title} badge="+150" delay={0.2}>
             <div className="h-40">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={automationBars} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>

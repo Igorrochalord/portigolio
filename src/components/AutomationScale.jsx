@@ -11,7 +11,7 @@ import {
   AreaChart,
   Area,
 } from "recharts";
-import { scraperCategories, sseLoadTest, automationStats } from "../content.js";
+import { useContent } from "../content.js";
 
 const CYAN = "#22d3ee";
 const GRID = "rgba(255,255,255,0.06)";
@@ -25,16 +25,15 @@ const tooltipStyle = {
 };
 
 export default function AutomationScale() {
+  const { scraperCategories, sseLoadTest, automationStats, ui } = useContent();
+  const t = ui.automation;
+
   return (
     <section id="automacao" className="px-6 py-24">
       <div className="max-w-6xl mx-auto">
-        <p className="font-mono text-cyan-400 text-sm mb-2 tracking-widest">DADOS PÚBLICOS EM ESCALA</p>
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
-          Automação e coleta de dados do governo, em produção
-        </h2>
-        <p className="text-slate-400 max-w-2xl mb-10">
-          Scrapers, pipelines e streaming em tempo real que sustentam o jornalismo de dados do Poder360.
-        </p>
+        <p className="font-mono text-cyan-400 text-sm mb-2 tracking-widest">{t.eyebrow}</p>
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">{t.heading}</h2>
+        <p className="text-slate-400 max-w-2xl mb-10">{t.subheading}</p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-10">
           {automationStats.map((s, i) => (
@@ -61,14 +60,12 @@ export default function AutomationScale() {
             className="glass rounded-2xl p-6"
           >
             <div className="flex items-center justify-between mb-1">
-              <h3 className="font-semibold text-white/90">Scrapers por categoria</h3>
+              <h3 className="font-semibold text-white/90">{t.scrapersByCategory.title}</h3>
               <span className="text-xs px-2 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                191 ativos
+                {t.scrapersByCategory.badge}
               </span>
             </div>
-            <p className="text-xs text-slate-500 mb-4">
-              Em tempo real: notícias, agências públicas, dados econômicos (Bacen), mercado de ações (CVM) e mais
-            </p>
+            <p className="text-xs text-slate-500 mb-4">{t.scrapersByCategory.caption}</p>
             <div className="h-72">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -106,12 +103,12 @@ export default function AutomationScale() {
             className="glass rounded-2xl p-6"
           >
             <div className="flex items-center justify-between mb-1">
-              <h3 className="font-semibold text-white/90">Teste de carga — Gateway SSE (eleições)</h3>
+              <h3 className="font-semibold text-white/90">{t.sseLoadTest.title}</h3>
               <span className="text-xs px-2 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                200K conexões
+                {t.sseLoadTest.badge}
               </span>
             </div>
-            <p className="text-xs text-slate-500 mb-4">Conexões simultâneas suportadas, por degrau de carga</p>
+            <p className="text-xs text-slate-500 mb-4">{t.sseLoadTest.caption}</p>
             <div className="h-72">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={sseLoadTest} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
@@ -132,7 +129,7 @@ export default function AutomationScale() {
                   />
                   <Tooltip
                     contentStyle={tooltipStyle}
-                    formatter={(v) => [`${v.toLocaleString("pt-BR")} conexões`, "Carga"]}
+                    formatter={(v) => [`${v.toLocaleString()} ${t.sseLoadTest.tooltipLabel}`, t.sseLoadTest.tooltipName]}
                   />
                   <Area
                     type="monotone"

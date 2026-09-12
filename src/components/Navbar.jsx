@@ -1,19 +1,23 @@
 import { motion } from "framer-motion";
-import { Download, MessageCircle } from "lucide-react";
+import { Download, MessageCircle, Languages } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./BrandIcons.jsx";
-import { links, profile } from "../content.js";
-
-const NAV_ITEMS = [
-  { href: "#impacto", label: "Impacto" },
-  { href: "#automacao", label: "Automação" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projetos", label: "Projetos" },
-  { href: "#trajetoria", label: "Trajetória" },
-  { href: "#depoimentos", label: "Depoimentos" },
-  { href: "#contato", label: "Contato" },
-];
+import { useContent } from "../content.js";
+import { useLanguage } from "../i18n/LanguageContext.jsx";
 
 export default function Navbar() {
+  const { links, profile, ui } = useContent();
+  const { toggle } = useLanguage();
+
+  const NAV_ITEMS = [
+    { href: "#impacto", label: ui.nav.impacto },
+    { href: "#automacao", label: ui.nav.automacao },
+    { href: "#skills", label: ui.nav.skills },
+    { href: "#projetos", label: ui.nav.projetos },
+    { href: "#trajetoria", label: ui.nav.trajetoria },
+    { href: "#depoimentos", label: ui.nav.depoimentos },
+    { href: "#contato", label: ui.nav.contato },
+  ];
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
@@ -38,6 +42,15 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={toggle}
+            aria-label={ui.langToggle.ariaLabel}
+            className="flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-cyan-400 border border-white/10 hover:border-cyan-400/40 rounded-md px-2 py-1 transition-colors"
+          >
+            <Languages size={14} />
+            {ui.langToggle.label}
+          </button>
           <a href={links.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="text-slate-400 hover:text-cyan-400 transition-colors">
             <GithubIcon size={18} />
           </a>
@@ -54,7 +67,7 @@ export default function Navbar() {
             className="hidden sm:inline-flex items-center gap-2 rounded-lg bg-cyan-500 text-slate-950 text-sm font-semibold px-4 py-2 hover:bg-cyan-400 transition-colors"
           >
             <Download size={16} />
-            CV
+            {ui.nav.cv}
           </a>
         </div>
       </nav>

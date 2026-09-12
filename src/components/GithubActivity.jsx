@@ -11,7 +11,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { githubRepo, links } from "../content.js";
+import { useContent } from "../content.js";
 
 const EMERALD = "#34d399";
 const ROSE = "#fb7185";
@@ -30,18 +30,20 @@ function statusColor(run) {
   return run.conclusion === "success" ? EMERALD : ROSE;
 }
 
-function relativeTime(iso) {
+function relativeTime(iso, t) {
   const diffMs = Date.now() - new Date(iso).getTime();
   const min = Math.round(diffMs / 60000);
-  if (min < 1) return "agora mesmo";
-  if (min < 60) return `há ${min} min`;
+  if (min < 1) return t.justNow;
+  if (min < 60) return t.minutesAgo(min);
   const hr = Math.round(min / 60);
-  if (hr < 24) return `há ${hr}h`;
+  if (hr < 24) return t.hoursAgo(hr);
   const days = Math.round(hr / 24);
-  return `há ${days}d`;
+  return t.daysAgo(days);
 }
 
 export default function GithubActivity() {
+  const { githubRepo, links, ui } = useContent();
+  const t = ui.github;
   const [runs, setRuns] = useState(null);
   const [error, setError] = useState(false);
 
@@ -61,7 +63,7 @@ export default function GithubActivity() {
             id: r.id,
             status: r.status,
             conclusion: r.conclusion,
-            message: (r.head_commit?.message || r.display_title || "sem mensagem").split("\n")[0],
+            message: (r.head_commit?.message || r.display_title || t.noMessage).split("\n")[0],
             sha: r.head_sha?.slice(0, 7),
             createdAt: r.created_at,
             durationSec: Math.max(1, Math.round((new Date(r.updated_at) - new Date(r.created_at)) / 1000)),
@@ -75,33 +77,34 @@ export default function GithubActivity() {
         setError(true);
       });
     return () => controller.abort();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [githubRepo.owner, githubRepo.name, githubRepo.workflow]);
 
   return (
     <section id="deploys" className="px-6 py-24 bg-black/20">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center gap-2 mb-2">
-          <p className="font-mono text-cyan-400 text-sm tracking-widest">DEPLOY ACTIVITY</p>
+          <p className="font-mono text-cyan-400 text-sm tracking-widest">{t.eyebrow}</p>
           <span className="flex items-center gap-1 text-[11px] text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-400/30 bg-emerald-400/5">
             <RefreshCw size={10} />
-            AO VIVO — via GitHub API
+            {t.liveBadge}
           </span>
         </div>
         <div className="flex flex-wrap items-end justify-between gap-3 mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-white">Este site também é CI/CD</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white">{t.heading}</h2>
           <a
             href={`https://github.com/${githubRepo.owner}/${githubRepo.name}/actions`}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-cyan-400 transition-colors"
           >
-            <GitBranch size={14} /> Ver no GitHub <ExternalLink size={12} />
+            <GitBranch size={14} /> {t.viewOnGithub} <ExternalLink size={12} />
           </a>
         </div>
 
         {error && (
           <p className="text-slate-500 text-sm">
-            Não consegui carregar os dados ao vivo agora. Veja direto em{" "}
+            {t.errorPrefix}{" "}
             <a href={links.github} target="_blank" rel="noreferrer" className="text-cyan-400 underline">
               github.com/{githubRepo.owner}/{githubRepo.name}
             </a>
@@ -109,9 +112,7 @@ export default function GithubActivity() {
           </p>
         )}
 
-        {!error && !runs && (
-          <p className="text-slate-500 text-sm animate-pulse">Carregando atividade do GitHub…</p>
-        )}
+        {!error && !runs && <p className="text-slate-500 text-sm animate-pulse">{t.loading}</p>}
 
         {!error && runs && runs.length > 0 && (
           <motion.div
@@ -121,7 +122,7 @@ export default function GithubActivity() {
             transition={{ duration: 0.6 }}
             className="glass rounded-2xl p-6"
           >
-            <p className="text-xs text-slate-500 mb-3">Duração dos últimos deploys (segundos)</p>
+            <p className="text-xs text-slate-500 mb-3">{t.durationCaption}</p>
             <div className="h-48">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={runs} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
@@ -130,7 +131,7 @@ export default function GithubActivity() {
                   <YAxis stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} />
                   <Tooltip
                     contentStyle={tooltipStyle}
-                    formatter={(v) => [`${v}s`, "Duração"]}
+                    formatter={(v) => [`${v}s`, t.tooltipDurationLabel]}
                     labelFormatter={(label, payload) => payload?.[0]?.payload?.message || label}
                   />
                   <Bar dataKey="durationSec" radius={[4, 4, 0, 0]}>
@@ -164,7 +165,7 @@ export default function GithubActivity() {
                     <span className="text-slate-300 truncate flex-1">{r.message}</span>
                     <span className="text-slate-600 font-mono text-xs shrink-0">{r.sha}</span>
                     <span className="text-slate-500 text-xs shrink-0 w-16 text-right">
-                      {relativeTime(r.createdAt)}
+                      {relativeTime(r.createdAt, t)}
                     </span>
                   </a>
                 ))}
