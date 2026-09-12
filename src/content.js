@@ -16,7 +16,10 @@ export const links = {
   linkedinEn: "https://www.linkedin.com/in/igor-rocha-0bb14521a/?locale=en-US", // caso o site ganhe uma versão em inglês
   github: "https://github.com/Igorrochalord",
   whatsapp: "https://wa.me/5561991207786",
-  cv: "#", // TODO: link para o PDF do currículo
+  // BASE_URL resolvido aqui (não só nos componentes) pra manter os dois currículos
+  // funcionando em qualquer subpasta (ex.: GitHub Pages), igual às fotos da dedicatória.
+  cv: `${import.meta.env.BASE_URL}cv/curriculo_igor.pdf`,
+  cvEn: `${import.meta.env.BASE_URL}cv/curriculo_igor_en.pdf`, // caso o site ganhe uma versão em inglês
   email: "mailto:igorprofessionaljob@gmail.com",
 };
 
