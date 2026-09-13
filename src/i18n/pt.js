@@ -91,7 +91,7 @@ export default {
     },
     contact: {
       eyebrow: "VAMOS CONVERSAR",
-      heading: "Aberto a oportunidades Backend / DevOps",
+      heading: "Backend / DevOps",
       subheading: (name, role, location) => `${name} — ${role}, ${location}. Vamos falar sobre o próximo desafio.`,
       whatsapp: "WhatsApp",
       email: "E-mail",
