@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Server, Cloud, Cpu, Bot, ArrowRight, Download } from "lucide-react";
-import { profile, heroMetrics, links } from "../content.js";
+import { useContent } from "../content.js";
 
 const ICONS = { server: Server, cloud: Cloud, cpu: Cpu, bot: Bot };
 
@@ -23,6 +23,8 @@ function MetricCard({ label, value, icon, delay }) {
 }
 
 export default function Hero() {
+  const { profile, heroMetrics, links, ui } = useContent();
+
   return (
     <section id="top" className="min-h-screen flex items-center pt-28 pb-16 px-6">
       <div className="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-14 items-center">
@@ -32,7 +34,7 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
         >
           <p className="font-mono text-cyan-400 text-sm mb-4 tracking-widest">
-            {profile.location.toUpperCase()} · DISPONÍVEL PARA NOVOS DESAFIOS
+            {profile.location.toUpperCase()} · {ui.hero.available}
           </p>
           <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">
             {profile.name}
@@ -48,7 +50,7 @@ export default function Hero() {
               href="#projetos"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-500 text-slate-950 font-semibold hover:bg-cyan-400 transition-colors"
             >
-              Ver projetos <ArrowRight size={18} />
+              {ui.hero.viewProjects} <ArrowRight size={18} />
             </a>
             <a
               href={links.cv}
@@ -56,7 +58,7 @@ export default function Hero() {
               rel="noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/15 text-white hover:border-cyan-400 hover:text-cyan-400 transition-colors"
             >
-              <Download size={18} /> Download CV
+              <Download size={18} /> {ui.hero.downloadCV}
             </a>
           </div>
         </motion.div>
@@ -67,13 +69,13 @@ export default function Hero() {
           className="glass rounded-3xl p-8"
         >
           <div className="flex items-center justify-between">
-            <h3 className="text-white/90 font-semibold">System Dashboard</h3>
+            <h3 className="text-white/90 font-semibold">{ui.hero.systemDashboard}</h3>
             <span className="flex items-center gap-2 text-xs text-emerald-400">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
               </span>
-              Production Online
+              {ui.hero.productionOnline}
             </span>
           </div>
 

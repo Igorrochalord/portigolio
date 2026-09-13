@@ -1,12 +1,14 @@
 import { motion } from "framer-motion";
-import { engineeringMetrics } from "../content.js";
+import { useContent } from "../content.js";
 
 export default function EngineeringMetrics() {
+  const { engineeringMetrics, ui } = useContent();
+
   return (
     <section className="px-6 py-24 bg-black/20">
       <div className="max-w-5xl mx-auto text-center">
-        <p className="font-mono text-cyan-400 text-sm mb-2 tracking-widest">ENGINEERING METRICS</p>
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-12">Números que contam a história</h2>
+        <p className="font-mono text-cyan-400 text-sm mb-2 tracking-widest">{ui.engineeringMetrics.eyebrow}</p>
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-12">{ui.engineeringMetrics.heading}</h2>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {engineeringMetrics.map((m, i) => (

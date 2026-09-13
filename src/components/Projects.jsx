@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, ExternalLink, Vote, RadioTower, Banknote, Bot, Wallet } from "lucide-react";
-import { projects, personalProjects } from "../content.js";
+import { useContent } from "../content.js";
 
 const ICONS = { vote: Vote, "radio-tower": RadioTower, banknote: Banknote, bot: Bot, wallet: Wallet };
 
@@ -9,15 +9,15 @@ const ICONS = { vote: Vote, "radio-tower": RadioTower, banknote: Banknote, bot: 
 const ProjectChart = lazy(() => import("./ProjectChart.jsx"));
 
 export default function Projects() {
+  const { projects, personalProjects, ui } = useContent();
+  const t = ui.projects;
+
   return (
     <section id="projetos" className="px-6 py-24 bg-black/20">
       <div className="max-w-5xl mx-auto">
-        <p className="font-mono text-cyan-400 text-sm mb-2 tracking-widest">PROJETOS</p>
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">Produtos que construí no Poder360</h2>
-        <p className="text-slate-400 max-w-2xl mb-10">
-          Sistemas de dados públicos em produção, do backend de coleta ao streaming em tempo real — cada um com o
-          resultado real que gerou.
-        </p>
+        <p className="font-mono text-cyan-400 text-sm mb-2 tracking-widest">{t.eyebrow}</p>
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">{t.heading}</h2>
+        <p className="text-slate-400 max-w-2xl mb-10">{t.subheading}</p>
 
         <div className="grid md:grid-cols-2 gap-6">
           {projects.map((p, i) => {
@@ -87,8 +87,8 @@ export default function Projects() {
         </div>
 
         <div className="mt-16">
-          <h3 className="text-xl font-bold text-white mb-1">Projetos pessoais</h3>
-          <p className="text-slate-400 text-sm mb-6">Fora do horário de trabalho, sem métricas de produção.</p>
+          <h3 className="text-xl font-bold text-white mb-1">{t.personalHeading}</h3>
+          <p className="text-slate-400 text-sm mb-6">{t.personalSubheading}</p>
 
           <div className="grid md:grid-cols-2 gap-6">
             {personalProjects.map((p, i) => {

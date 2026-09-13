@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
-import { cases } from "../content.js";
+import { useContent } from "../content.js";
 
 export default function ImpactCases() {
+  const { cases, ui } = useContent();
+
   return (
     <section id="impacto" className="px-6 py-24 bg-black/20">
       <div className="max-w-6xl mx-auto">
-        <p className="font-mono text-cyan-400 text-sm mb-2 tracking-widest">IMPACTO PROFISSIONAL</p>
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">
-          Resultados, não apenas cargos
-        </h2>
+        <p className="font-mono text-cyan-400 text-sm mb-2 tracking-widest">{ui.impact.eyebrow}</p>
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">{ui.impact.heading}</h2>
 
         <div className="grid md:grid-cols-3 gap-6">
           {cases.map((c, i) => (
